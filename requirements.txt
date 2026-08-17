@@ -1,0 +1,10 @@
+floris==4.6.4
+matplotlib==3.10.8
+numpy==2.4.4
+pandas==2.3.3
+py_wake==2.6.20
+pygad==3.6.0
+shapely==2.1.2
+topfarm==2.6.2
+torch==2.8.0
+xarray==2026.4.0

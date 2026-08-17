@@ -1,0 +1,66 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and local package state
+.venv/
+venv/
+env/
+ENV/
+.conda/
+pip-wheel-metadata/
+*.egg-info/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Generated results and experiment outputs
+results/
+output/
+tmp/
+tmp_*/
+data/
+*.log
+*.aux
+*.out
+*.toc
+*.synctex.gz
+*.npy
+*.npz
+*.csv
+*.png
+*.pdf
+
+# Generated text summaries from local runs
+ablation_study/*.txt
+
+# Paper reproduction artifacts: keep only the exact saved layouts.
+!paper_artifacts/
+!paper_artifacts/layouts/
+!paper_artifacts/layouts/*.npy
+
+# Keep source and documentation visible even with broad generated-output rules
+!README.md
+!LICENSE
+!requirements.txt
