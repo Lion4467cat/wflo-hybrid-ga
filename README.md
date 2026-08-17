@@ -57,6 +57,7 @@ Generated via fresh stochastic optimization runs (`seed=42`) in the `wflo` envir
 |   |-- generate_comparison.py    # Aggregates result summaries into CSV/plots
 |   |-- validate_jensen_angles.py # Jensen angle-convention diagnostics
 |   `-- VALIDATION_CHECKLIST.py
+|-- .gitignore
 |-- requirements.txt
 |-- LICENSE
 `-- README.md
@@ -129,11 +130,11 @@ python generate_comparison.py
 
 ## Method Summary
 
-The optimizer represents each layout as continuous turbine coordinates and enforces polygon containment plus a 400 m spacing constraint through feasibility checks and repair. It evaluates every candidate with a GPU-vectorized Jensen wake calculation over the eight-direction wind rose, then sends only strong candidates to FLORIS when the Jensen score clears a 0.88 running-best gate and the generation has not exceeded a 10-call FLORIS cap. Specifically, the PyGAD configuration uses `sol_per_pop=50` with `keep_parents=10`, yielding exactly $50 - 10 = 40$ new candidate layout evaluations per generation (matching Table I's reported 40-candidate count and the total evaluation formula: $50 + (58 - 1) \times 40 = 2330$). Runs are configured with a 200-generation limit and `saturate_30` early stopping; final AEP values are reported after FLORIS rescoring.
+The optimizer represents each layout as continuous turbine coordinates and enforces polygon containment plus a 400 m spacing constraint through feasibility checks and repair. It evaluates every candidate with a GPU-vectorized Jensen wake calculation over the eight-direction wind rose, then sends only strong candidates to FLORIS when the Jensen score clears a 0.88 running-best gate and the generation has not exceeded a 10-call FLORIS cap. Specifically, the PyGAD configuration uses `sol_per_pop=50` with `keep_parents=10`, yielding exactly 50 - 10 = 40 new candidate layout evaluations per generation (matching Table I's reported 40-candidate count and the total evaluation formula: 50 + (58 - 1) * 40 = 2330). Runs are configured with a 200-generation limit and `saturate_30` early stopping; final AEP values are reported after FLORIS rescoring.
 
 ## Acknowledgments
 
-Documentation contributions by Jiya Nitturkar, Department of Computer Science, B.M.S. College of Engineering.
+Documentation contributions by Jiya Nitturkar, Department of Computer Science, B.M.S. College of Engineering (nitturkarjiya@gmail.com).
 
 ## Citation
 
