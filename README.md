@@ -17,11 +17,11 @@ These are the peer-reviewed, citable headline numbers published in the paper:
 
 | Method | FLORIS AEP (GWh/yr) | Gain vs. Random | Status |
 | :--- | :---: | :---: | :---: |
-| **Random baseline** | 3923.46 | Reference | Feasible ($\ge 400\text{ m}$) |
-| **Jensen-only GA (Ablation)** | 3950.41 | +0.69% | Feasible ($\ge 400\text{ m}$) |
-| **TOPFARM Random Search** | 3952.01 | +0.73% | Feasible ($\ge 400\text{ m}$) |
-| **Hybrid GA (Proposed)** | **4029.16** | **+2.69%** | Feasible ($\ge 400\text{ m}$) |
-| *TOPFARM GA (Diagnostic)* | *3938.96* | *+0.39%* | *Infeasible ($398.48\text{ m} < 400\text{ m}$)* |
+| **Random baseline** | 3923.46 | Reference | Feasible (>= 400 m) |
+| **Jensen-only GA (Ablation)** | 3950.41 | +0.69% | Feasible (>= 400 m) |
+| **TOPFARM Random Search** | 3952.01 | +0.73% | Feasible (>= 400 m) |
+| **Hybrid GA (Proposed)** | **4029.16** | **+2.69%** | Feasible (>= 400 m) |
+| *TOPFARM GA (Diagnostic)* | *3938.96* | *+0.39%* | *Infeasible (398.48 m < 400 m)* |
 
 ### Fresh Reproduction Run Results (Shipped Layout Artifacts)
 Generated via fresh stochastic optimization runs (`seed=42`) in the `wflo` environment and saved under `paper_artifacts/layouts/`:
