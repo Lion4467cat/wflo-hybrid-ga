@@ -15,7 +15,7 @@ FIXES APPLIED (all rounds):
   Fix 7 — geometric_mutation: replace=False (was replacement — same turbine repeated)
   Fix 8 — generate_valid_position: raises on failure (was silent bad-coord return)
   Fix 9 — custom_crossover: splits on turbine index (was gene index — severed x/y blocks)
-  Fix 10 — FLORIS hard cap: MAX_FLORIS_PER_GEN=5 stops the relative gate degrading
+  Fix 10 — FLORIS hard cap: MAX_FLORIS_PER_GEN=10 stops the relative gate degrading
             to "evaluate everything" once the population matures. FLORIS_CALLS_THIS_GEN
             declared global at the TOP of fitness_func (not inside the if-block) so
             Python's static scope resolution honours it at the condition check.
@@ -199,7 +199,7 @@ def fitness_func(ga_instance, solution, solution_idx):
     # --- FLORIS gate: relative quality filter AND hard per-generation cap ---
     #
     # FIX 10 — two-part guard:
-    #   Part A (relative): approx_gwh > 0.85 * BEST_APPROX
+    #   Part A (relative): approx_gwh > 0.88 * BEST_APPROX
     #       filters obvious losers, same as before.
     #   Part B (absolute): FLORIS_CALLS_THIS_GEN < MAX_FLORIS_PER_GEN
     #       hard ceiling so a mature population (where Part A passes nearly
@@ -268,6 +268,10 @@ def create_valid_individual():
     return np.concatenate((xs, ys))
 
 
+def _is_valid(matrix):
+    """Check if a layout is strictly feasible."""
+    pass # not used
+
 # ====================== FULL REPAIR ======================
 def repair_individual(solution):
     """
@@ -290,8 +294,8 @@ def repair_individual(solution):
 
         try:
             new_x, new_y = generate_valid_position(others)
-        except RuntimeError:
-            continue
+        except RuntimeError as e:
+            raise RuntimeError(f"Repair failed for turbine {idx}: {e}")
 
         matrix[idx, 0] = new_x
         matrix[idx, 1] = new_y

@@ -226,8 +226,8 @@ def repair_individual(solution):
             continue
         try:
             new_x, new_y = generate_valid_position(others)
-        except RuntimeError:
-            continue
+        except RuntimeError as e:
+            raise RuntimeError(f"Repair failed for turbine {idx}: {e}")
         matrix[idx, 0] = new_x
         matrix[idx, 1] = new_y
         pos_list[idx] = (new_x, new_y)
@@ -298,7 +298,11 @@ def on_generation(ga_instance):
     gen = ga_instance.generations_completed
     best = max(ga_instance.previous_generation_fitness)
     elapsed = time.time() - _start_time
-    print(f"  Gen {gen:3d} | AEP: {best:.2f} GWh/yr | Elapsed: {elapsed:.0f}s")
+    print(
+        f"  Gen {gen:3d} | Best: {best:.4f} GWh/yr | "
+        f"Elapsed: {elapsed:.0f}s",
+        flush=True,
+    )
 
 
 # ====================== MAIN ======================
@@ -307,6 +311,7 @@ def main():
 
     print("\nGenerating valid initial population (seed=42, identical to final.py)...", flush=True)
     np.random.seed(42)
+    torch.manual_seed(42)
     initial_population_list = []
     for idx in range(50):
         initial_population_list.append(create_valid_individual())

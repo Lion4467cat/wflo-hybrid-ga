@@ -91,9 +91,7 @@ if hybrid_path is not None:
     hybrid_aep = floris_score(hybrid_path, "Hybrid GA      ")
     hybrid_label = "Hybrid GA (rescored)"
 else:
-    hybrid_aep = 4029.16
-    hybrid_label = "Hybrid GA (paper ref)"
-    print("  Hybrid GA      : no saved layout found; using paper reference 4029.16 GWh/yr")
+    raise FileNotFoundError("Missing hybrid_best_layout.npy. Please run final.py first.")
 
 # ====================== RESULTS ======================
 ablation_vs_random = (ablation_aep - random_aep) / random_aep * 100
