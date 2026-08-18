@@ -237,6 +237,27 @@ def repair_individual(solution):
 
 
 # ====================== OPERATORS (IDENTICAL to final.py) ======================
+repair_failure_count = 0
+
+def safe_repair(raw_child, fallback_parent):
+    """Safely attempts to repair a child, or replaces it from scratch, or falls back to a parent."""
+    global repair_failure_count
+    for _ in range(5):
+        try:
+            return repair_individual(raw_child)
+        except RuntimeError:
+            repair_failure_count += 1
+            
+    for _ in range(5):
+        try:
+            fresh = create_valid_individual()
+            repair_failure_count += 1
+            return fresh
+        except RuntimeError:
+            pass
+
+    return fallback_parent.copy()
+
 def custom_crossover(parents, offspring_size, ga_instance):
     offspring = np.empty(offspring_size)
     num_parents = parents.shape[0]
@@ -255,8 +276,10 @@ def custom_crossover(parents, offspring_size, ga_instance):
             NUM_TURBINES : NUM_TURBINES + k
         ]
         offspring[i, NUM_TURBINES + k :] = p2[NUM_TURBINES + k :]
-    for i in range(offspring_size[0]):
-        offspring[i] = repair_individual(offspring[i])
+        
+        # Apply safe repair immediately
+        offspring[i] = safe_repair(offspring[i], p1)
+        
     return offspring
 
 
@@ -286,7 +309,7 @@ def geometric_mutation(offspring, ga_instance):
                     matrix[0, turbine_idx] = new_x
                     matrix[1, turbine_idx] = new_y
                     break
-        offspring[i] = repair_individual(matrix.flatten())
+        offspring[i] = safe_repair(matrix.flatten(), offspring[i])
     return offspring
 
 
@@ -353,6 +376,7 @@ def main():
     print(f"  Jensen fitness   : {best_aep_gwh:.2f} GWh/yr")
     print(f"  Generations run  : {ga_instance.generations_completed}")
     print(f"  Total time       : {total_time / 60:.1f} min")
+    print(f"  Repair failures  : {repair_failure_count}")
     print("  FLORIS calls     : 0  (ablation — Jensen only)")
     print("  Compare to random only after FLORIS rescoring with score_floris.py")
     print("=" * 55)
